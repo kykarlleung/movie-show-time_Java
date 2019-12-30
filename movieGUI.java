@@ -900,23 +900,8 @@ public class movieGUI {
 	//Class to Handle Movie Check Box Related Functions
 	private class selectionHandler implements ItemListener{
 		public void itemStateChanged(ItemEvent event) {
-			/*
-			String rating = "";
-			if (event.getSource() == movieJCBox) {
-				System.out.println("MovieJCBOX Index Selected: "+movieJCBox.getSelectedIndex());
-				if(movieJCBox.getSelectedIndex() > 0 ) {	// no change = -1, first item = 0 (Both are Empty String for User Input)
-					rating = database.getMovieRating( movieJCBox.getSelectedItem().toString() );
-
-					ratingJCBox.setSelectedItem( rating );
-
-					System.out.println("Item Selected Was Not User Entered");
-				}
-			}
-			elsee */{
-				filterMovies();
-				tabbedPane.setSelectedIndex(0);
-			}
+			filterMovies();
+			tabbedPane.setSelectedIndex(0);
 		}
-	}//Any changes to checkboxes will alert this HandlerClass
-
+	}
 }

@@ -249,8 +249,6 @@ public class database {
 
 	public static void loadDataToMovie() {
 
-		//I added a couple extra close() calls because it is good practice to close everything
-		//to avoid memory leaks. this includes preparedStatements, result sets, and Connections
 			String sql = "SELECT movies,ratings FROM showings.movies";
 			try {
 				Connect();
@@ -374,7 +372,7 @@ public class database {
 
 //We'll probably keep this or change it depending on what our hours should be for the Movie Cinemas
 	public static String[] loadTime() {
-		//Lazy means to load timeA with an array of time
+		
 		Vector<String> t = new Vector<String>();
 		for(int i = 0; i < 24 ; i++) {
 			if(i == 0) {
@@ -405,9 +403,6 @@ public class database {
 
 	public static void deleteMovie(String movieS, String cinemaS, String timeS) {
 
-		//Originally I was trying to delete them both with the same prepared statement because in SQL
-		//You can execute multiple queries if they are separated by a semicolon, but can't do that with JDBC apparently,
-		//So 2 different prepared statements are required
 		if(cinemaS.equals("") && timeS.equals("")) {
 			String del1 = "DELETE FROM showings.`movies`" +
 					" WHERE movies = '" + movieS +"'";
@@ -464,10 +459,6 @@ public class database {
 
 	public static void deleteCinema(String cinemaS) {
 		
-/*@
-//11/9 I hope you don't mind but I mimicked your code above to remove cinemas where it may appear under both the 'cinemas' Table and the 'moviesandcinemas' Table
- * I don't quite understand the add method part yet but we'll need to the same for adding movies to both the 'moviesandcinemas' Table and the 'movies' Table
-*/	
 		String del1 = "DELETE FROM showings.`cinemas`" +
 				" WHERE cinemas = '" + cinemaS +"'";
 
@@ -494,8 +485,7 @@ public class database {
 			e.printStackTrace();
 		}
 	}
-		//movieGUI.cinemaJCBox.removeItem(cinemaS); //This part may be unnecessary after DB goes live, I'll need more testing
-		//System.out.println(cinemaS + " was just removed from cinemaJCBox");
+
 		System.out.println(cinemaS + " has been removed from DB");
 		
 	}
@@ -521,11 +511,7 @@ public class database {
 	}
 
 	public static void getCinemaXY(String cinemaS) {
-/*@
- * update movieGUI.xDB and movieGUI.yDB with the xy coordinates of the cinema with the name cinemaS
- * We'll need this for comparing/filtering Cinemas that are within radius of our location under filter
- * Also, I'm not sure how Karl or I will want to use this information for solving how to filter cinemas :\
-*/		
+
 		String sql = "SELECT * FROM showings.cinemas"
 				+ "WHERE cinemas ='" + cinemaS + "'";
 		try {
@@ -552,15 +538,10 @@ public class database {
 		
 	}
 
-//Dann's Bookmark
-    /*if the movie isn't unique, meaning it exist, then we check to see if the rating entered matches the record in the DB and
-	the number of instances. if not the same rating or if 3 instances exist already, dont add to the DB */
+
 	public static void addMovieToDB(String movieS, String cinemaS, String ratingS, String timeS) {
 
-//If Movie is Unique && If Cinema does not have 3 instances of movieS
-	//insert into database table Movie|Rating and Movie|Cinema|Time
 		
-		//THE ASSUMPTION HERE IS THAT THE MOVIE ALREADY EXISTS AND THERFORE DO NOT NEED TO CHECK THE UNIQUENESS OF THE MOVIE
 		boolean c =  cinemaS.equals("");
 		boolean r =  ratingS.equals("");
 		boolean t =  timeS.equals("");
